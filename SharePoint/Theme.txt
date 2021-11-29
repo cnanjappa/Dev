@@ -1,0 +1,26 @@
+
+$themepalette = @{
+"themePrimary" = "#05314d";
+"themeLighterAlt" = "#cfdfea";
+"themeLighter" = "#a8c4d6";
+"themeLight" = "#84abc2";
+"themeTertiary" = "#6592af";
+"themeSecondary" = "#085280";
+"themeDarkAlt" = "#326787";
+"themeDark" = "#1f5374";
+"themeDarker" = "#104160";
+"neutralLighterAlt" = "#faf9f8";
+"neutralLighter" = "#f3f2f1";
+"neutralLight" = "#edebe9";
+"neutralQuaternaryAlt" = "#e1dfdd";
+"neutralQuaternary" = "#d0d0d0";
+"neutralTertiaryAlt" = "#c8c6c4";
+"neutralTertiary" = "#aeaeae";
+"neutralSecondary" = "#949494";
+"neutralPrimaryAlt" = "#7a7a7a";
+"neutralPrimary" = "#121212";
+"neutralDark" = "#464646";
+"black" = "#2c2c2c";
+"white" = "#ffffff";
+}
+Add-SPOTheme -Identity "HomeSite Theme" -Palette $themepalette -IsInverted $false
