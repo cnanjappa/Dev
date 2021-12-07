@@ -1,0 +1,11 @@
+{
+  "@microsoft/generator-sharepoint": {
+    "isCreatingSolution": true,
+    "environment": "onprem19",
+    "version": "1.8.2",
+    "libraryName": "modern-cewp",
+    "libraryId": "1887252b-c1c6-4054-8c1b-ee22a49dbd32",
+    "packageManager": "npm",
+    "componentType": "webpart"
+  }
+}

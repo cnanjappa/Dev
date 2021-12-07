@@ -1,0 +1,23 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "data-entry-form-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/dataEntryForm/DataEntryFormWebPart.js",
+          "manifest": "./src/webparts/dataEntryForm/DataEntryFormWebPart.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {
+    "jquery": {
+      "path": "https://code.jquery.com/jquery-3.5.1.min.js",
+      "globalName": "jQuery"
+    }
+  },
+  "localizedResources": {
+    "DataEntryFormWebPartStrings": "lib/webparts/dataEntryForm/loc/{locale}.js"
+  }
+}

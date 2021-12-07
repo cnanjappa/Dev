@@ -1,0 +1,1 @@
+After extracting the folders containing each individual project, please run npm install to download all necessary dependencies to build each solution.

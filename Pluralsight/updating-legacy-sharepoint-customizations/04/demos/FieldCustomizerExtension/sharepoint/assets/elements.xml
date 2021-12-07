@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+    <Field ID="{c48e4cb6-2c03-4c80-923a-80eab9bb8c24}"
+            Name="SPFxMiles"
+            DisplayName="Miles"
+            Type="Number"
+            Min="0"
+            Required="FALSE"
+            Group="SPFx Columns"
+            ClientSideComponentId="4d6aaac4-62a7-421f-9ec1-59111ba63a21">
+    </Field>
+</Elements>

@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  <CustomAction Id="DuplicateForDate" 
+                RegistrationType="List"
+                RegistrationId="94CD8322-E246-4217-8B88-E96C748A01C5"
+                Location="EditControlBlock" 
+                Sequence="101" 
+                Title="Copy for Today">
+    <UrlAction Url="~site/SitePages/CopyToday.aspx?ItemId={ItemId}"/>
+  </CustomAction>
+  <CustomAction Id="DuplicateForDate2"
+                RegistrationType="List"
+                RegistrationId="94CD8322-E246-4217-8B88-E96C748A01C5"
+                Location="EditControlBlock"
+                Sequence="102"
+                Title="Copy for Next Week">
+    <UrlAction Url="~site/SitePages/CopyWeek.aspx?ItemId={ItemId}"/>
+  </CustomAction>
+</Elements>

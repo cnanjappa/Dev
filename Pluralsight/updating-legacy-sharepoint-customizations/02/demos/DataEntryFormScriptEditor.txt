@@ -1,0 +1,49 @@
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $("#btnSubmit").on("click", function () {
+        submit();
+    });
+});
+
+function submit() {
+    var headers = { "accept": "application/json;odata=verbose" };
+    $.ajax({
+        url: _spPageContextInfo.webAbsoluteUrl + "/_api/web/getuserbyid(" + _spPageContextInfo.userId + ")",
+        contentType: "application/json;odata=verbose",
+        headers: headers,
+        success: onSuccess,
+        error: onError
+    });
+    function onSuccess(data, request) {
+        var d = $("#txtDate").val(); 
+        var miles = $("#txtMiles").val(); 
+        var clientContext = new SP.ClientContext(); 
+        var oList = clientContext.get_web().get_lists().getByTitle("Running"); 
+        var itemCreateInfo = new SP.ListItemCreationInformation(); 
+        var oListItem = oList.addItem(itemCreateInfo); 
+        oListItem.set_item("Title", data.d.Title); 
+        oListItem.set_item("Date", new Date(d)); 
+        oListItem.set_item("Miles", miles); 
+        oListItem.update(); 
+        clientContext.load(oListItem); 
+        clientContext.executeQueryAsync( 
+            function() {
+                $("#divOutput").html("Item successfully added!");
+            }, function(sender, args) {
+                $("#divOutput").html("Request failed. <br />" + args.get_message() + "<br />" + args.get_stackTrace());
+            }
+        );
+    }
+    function onError(error) {
+        alert("Error!");
+    }
+}
+</script>
+
+<h2>Carved Rock Running Challenge</h2>
+<p>Enter your miles below.</p>
+Date: <input type="text" id="txtDate" /><br />
+Miles: <input type="text" id="txtMiles" /><br />
+<input id="btnSubmit" type="button" value="Submit" /><br />
+<div id="divOutput"></div>

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "marquee-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/marquee/MarqueeWebPart.js",
+          "manifest": "./src/webparts/marquee/MarqueeWebPart.manifest.json"
+        }
+      ]
+    },
+    "slider-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/slider/SliderWebPart.js",
+          "manifest": "./src/webparts/slider/SliderWebPart.manifest.json"
+        }
+      ]
+    },
+    "cewp-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/cewp/CewpWebPart.js",
+          "manifest": "./src/webparts/cewp/CewpWebPart.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {
+    "jquery": "https://code.jquery.com/jquery-1.12.4.min.js"
+  },
+  "localizedResources": {
+    "MarqueeWebPartStrings": "lib/webparts/marquee/loc/{locale}.js",
+    "SliderWebPartStrings": "lib/webparts/slider/loc/{locale}.js",
+    "CewpWebPartStrings": "lib/webparts/cewp/loc/{locale}.js"
+  }
+}

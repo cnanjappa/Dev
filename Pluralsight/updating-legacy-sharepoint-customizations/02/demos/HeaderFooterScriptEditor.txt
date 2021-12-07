@@ -1,0 +1,7 @@
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+   $("<div id='customHeader' class='ms-dialogHidden' style='background-color:black;color:white;text-align:center'>Don't forget to enter your miles for our monthly running challenge!</div>").insertBefore("#suiteBar");
+   $("<div id='customFooter' class='ms-dialogHidden' style='background-color:black;color:white;text-align:center'>&copy; 2020 Carved Rock Fitness</div>").insertAfter("#s4-bodyContainer");
+});
+</script>

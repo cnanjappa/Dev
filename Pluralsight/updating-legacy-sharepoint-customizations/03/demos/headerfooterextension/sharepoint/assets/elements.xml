@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+    <CustomAction
+        Title="HeaderFooter"
+        Location="ClientSideExtension.ApplicationCustomizer"
+        ClientSideComponentId="bec507c9-59e0-4213-9c54-a1c335a4c116"
+        ClientSideComponentProperties="{&quot;Header&quot;:&quot;Don't forget to enter your miles for our monthly running challenge!&quot;,&quot;Footer&quot;:&quot;© 2020 Carved Rock Fitness&quot;}">
+    </CustomAction>
+</Elements>

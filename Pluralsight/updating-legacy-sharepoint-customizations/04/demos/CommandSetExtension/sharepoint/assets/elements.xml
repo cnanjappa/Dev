@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+    <CustomAction
+        Title="CustomRunningCommands"
+        RegistrationId="026338bc-81f0-4bd7-8ff0-42c5cff57474"
+        RegistrationType="List"
+        Location="ClientSideExtension.ListViewCommandSet.ContextMenu"
+        ClientSideComponentId="6a2f9068-8323-4a72-836f-b9941646dbab"
+        ClientSideComponentProperties="{&quot;sampleTextOne&quot;:&quot;One item is selected in the list.&quot;, &quot;sampleTextTwo&quot;:&quot;This command is always visible.&quot;}">
+    </CustomAction>
+</Elements>
