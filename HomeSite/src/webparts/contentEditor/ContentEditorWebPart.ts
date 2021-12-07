@@ -1,11 +1,6 @@
-import { Version } from '@microsoft/sp-core-library';
-import { Environment, EnvironmentType, DisplayMode } from '@microsoft/sp-core-library';
-import {
-  IPropertyPaneConfiguration,
-  PropertyPaneTextField
-} from '@microsoft/sp-property-pane';
+import { Version, Environment, EnvironmentType, DisplayMode } from '@microsoft/sp-core-library';
+import { IPropertyPaneConfiguration, PropertyPaneTextField, PropertyPaneToggle} from '@microsoft/sp-property-pane';
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
-import { escape } from '@microsoft/sp-lodash-subset';
 import styles from './ContentEditorWebPart.module.scss';
 import * as strings from 'ContentEditorWebPartStrings';
 
@@ -13,41 +8,61 @@ import * as jQuery from 'jquery';
 declare var window: any;
 
 export interface IContentEditorWebPartProps {
-  description: string;
+  spPageContextInfo: boolean;
   content:string;
   contentLink:string;
 }
 
 export default class ContentEditorWebPart extends BaseClientSideWebPart<IContentEditorWebPartProps> {
 
-  public _renderEdit(): void {    
-    this.domElement.innerHTML =  `
-    <div class="${ styles.contentEditor }">
-      <div class="${ styles.container }">
-        <div class="${ styles.row }">
-          <div class="${ styles.column }">
-            <span class="${ styles.title }">Welcome to Content Editor Webpart!</span>
-            <p class="${ styles.subTitle }">Allows authors to enter rich text conent.</p>    
-            <p class="${ styles.subTitle }">Environment Type - ${Environment.type}</p>             
+  public _renderEdit(): void {
+    let path: string = this.properties.contentLink;
+    const hasPath: string = path !== '' ? strings.Yes : strings.No;
+    if (path === '') {
+      path = strings.PathNotSet;
+    }
+    const hasHtml: string = this.properties.content !== '' ? strings.Yes : strings.No;
+    const hasLegacyContext: string = this.properties.spPageContextInfo ? strings.Yes : strings.No;
+    this.domElement.innerHTML = `
+      <div class="${ styles.contentEditor}">
+        <div class="${ styles.container}">
+          <div class="${ styles.row}">              
+              <div class="${ styles.title}">${strings.webPartName}</div>
+              <div class="${ styles.subTitle}">${strings.webPartSettings}</div>
+              <p class="${ styles.label}">${strings.WebPartHasContentLinkLabel}${hasPath}</p>
+              <p class="${ styles.label}">${strings.WebPartHasHTMLLabel}${hasHtml}</p>
+              <p class="${ styles.label}">${strings.WebPartHasPageContextLabel}${hasLegacyContext}</p>
           </div>
         </div>
-      </div>
-    </div>`;
+      </div>`;
   }
 
   public _renderView(): void {
+    // Make jQuery globally available
+    if (window.jQuery === undefined) {
+      window.jQuery = jQuery;
+    }
+    // Make _spPageContextInfo available
+    if (this.properties.spPageContextInfo && !window._spPageContextInfo) {
+      window._spPageContextInfo = this.context.pageContext.legacyPageContext;
+    }
     const uid: string = String(Math.random()).substr(2);
-    const contentPlaceholderId: string = 'modernCEWP_ContentPlaceholder_' + uid;
-    const contentLinkPlaceholderId: string = 'modernCEWP_ContentLinkPlaceholder_' + uid;
+    const contentPlaceholderId: string = 'ContentPlaceholder_' + uid;
+    const contentLinkPlaceholderId: string = 'ContentLinkPlaceholder_' + uid;
     const html: string = this.properties.content;
     const path: string = this.properties.contentLink;
-    if (html !== '') {
-      this.domElement.innerHTML = '<div id="' + contentPlaceholderId + '"></div>';
-      jQuery('#' + contentPlaceholderId).html(html);
-    }
+    let innerHTML: string = '';
+    
     if (path !== '') {
-      this.domElement.innerHTML += '<div id="' + contentLinkPlaceholderId + '"></div>';    
-      jQuery.get(path).done((data) => {
+      innerHTML += '<div id="' + contentLinkPlaceholderId + '"></div>';
+    }
+    if (html !== '') {
+      innerHTML += '<div id="' + contentPlaceholderId + '"></div>';
+    }
+    this.domElement.innerHTML = innerHTML;
+    
+    if (path !== '') {
+      jQuery.get(this.properties.contentLink).done((data) => {
         jQuery('#' + contentLinkPlaceholderId).html(data);
       }).fail((err) => {
         const str: string = `
@@ -61,6 +76,9 @@ export default class ContentEditorWebPart extends BaseClientSideWebPart<IContent
         </div>`;
         jQuery('#' + contentLinkPlaceholderId).html(str);
       });
+    }
+    if (html !== '') {
+      jQuery('#' + contentPlaceholderId).html(html);
     }
     if (path === '' && html === '') {
       const str: string = `
@@ -77,7 +95,7 @@ export default class ContentEditorWebPart extends BaseClientSideWebPart<IContent
 
   public render(): void {
      // Detect display mode on classic and modern pages pages
-     if (Environment.type === EnvironmentType.ClassicSharePoint) {
+    if (Environment.type === EnvironmentType.ClassicSharePoint) {
       let isInEditMode: boolean;
       let interval: number;
       let _this = this;
@@ -105,35 +123,42 @@ export default class ContentEditorWebPart extends BaseClientSideWebPart<IContent
     }
   }
 
+  protected get disableReactivePropertyChanges(): boolean {
+     return true;
+  }
+
   protected get dataVersion(): Version {
     return Version.parse('1.0');
   }
 
-  protected get disableReactivePropertyChanges(): boolean {
-    return true;
-  }
-  
   protected getPropertyPaneConfiguration(): IPropertyPaneConfiguration {
     return {
       pages: [
         {
-          header: {
-            description: strings.PropertyPaneDescription
-          },
+          //header: {
+          //  description: strings.PropertyPaneDescription
+          //},
           groups: [
-            {              
+            {
+              groupName: strings.BasicGroupName,
               groupFields: [
                 PropertyPaneTextField('contentLink', {
-                  label: strings.ContentLinkFieldLabel,
-                  multiline:true,
-                  rows:2,
-                  resizable:true
+                  label: strings.ContentlinkFieldLabel,
+                  multiline: true,
+                  rows: 2,
+                  resizable: true
                 }),
                 PropertyPaneTextField('content', {
                   label: strings.ContentFieldLabel,
-                  multiline:true,
-                  rows:20,
-                  resizable:true
+                  multiline: true,
+                  rows: 20,
+                  resizable: true
+                }),
+                PropertyPaneToggle('spPageContextInfo', {
+                  label: strings.AddspPageContextInfo,
+                  checked: this.properties.spPageContextInfo,
+                  onText: 'Enabled',
+                  offText: 'Disabled'
                 })
               ]
             }

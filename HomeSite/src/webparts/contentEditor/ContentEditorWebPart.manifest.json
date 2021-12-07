@@ -16,12 +16,14 @@
 
   "preconfiguredEntries": [{
     "groupId": "5c03119e-3074-46fd-976b-c60198311f70", // Other
-    "group": { "default": "Other" },
-    "title": { "default": "Content Editor" },
+    "group": { "default": "HomeSIte" },
+    "title": { "default": "Content Editor", "nb-no":"Content Editor" },
     "description": { "default": "Allows authors to enter rich text content." },
     "officeFabricIconFontName": "FileHTML",
     "properties": {
-      "description": "Content Editor"
+      "content": "",
+      "contentLink": "",
+      "spPageContextInfo": ""
     }
   }]
 }
